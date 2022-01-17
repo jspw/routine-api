@@ -1,5 +1,6 @@
 package com.funstuff.routine.request;
 
+import com.funstuff.routine.utility.TodoStatus;
 import com.funstuff.routine.utility.TodoType;
 import lombok.*;
 
@@ -16,4 +17,5 @@ public class AddTodoForm {
     private TodoType type;
     private Date startAt;
     private Date endAt;
+    private long userId;
 }

@@ -2,6 +2,7 @@ package com.funstuff.routine.service;
 
 
 
+import com.funstuff.routine.entity.Role;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.request.SignupForm;
 import com.funstuff.routine.request.UserUpdateForm;
@@ -21,6 +22,7 @@ public interface UserService {
 
     List<User> getUsers();
 
-
+    Role addRole(Role role);
+    void addUserRole(long id,String roleName);
 
 }

@@ -1,5 +1,9 @@
 package com.funstuff.routine.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.funstuff.routine.utility.TodoStatus;
 import com.funstuff.routine.utility.TodoType;
 import lombok.*;
 
@@ -25,6 +29,10 @@ public class Todo {
     private String detail;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status",nullable = false)
+    private TodoStatus status;
+
+    @Enumerated(EnumType.ORDINAL)
     @Column(name="type",nullable=false)
     private TodoType type;
 
@@ -39,5 +47,13 @@ public class Todo {
 
     @Column(name = "updatedAt")
     private Date updatedAt;
+
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

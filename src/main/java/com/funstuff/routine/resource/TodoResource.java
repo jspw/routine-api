@@ -2,6 +2,7 @@ package com.funstuff.routine.resource;
 
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.request.AddTodoForm;
+import com.funstuff.routine.request.UpdateTodoForm;
 import com.funstuff.routine.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,10 @@ public class TodoResource {
         this.todoService = todoService;
     }
 
-//    @GetMapping(value = "/",produces = {"application/json"})
-//    public ResponseEntity<?> getTodos(){
-//        List<Todo> users = todoService.getTodos();
-//        return ResponseEntity.status(HttpStatus.OK).body(users);
-//    }
+    @GetMapping
+    public ResponseEntity<?> getTodos(){
+        return  ResponseEntity.ok().body(todoService.getTodos());
+    }
 
     @PostMapping(value = "/",consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<?> createTodo(@RequestBody AddTodoForm addTodoForm) throws NoSuchAlgorithmException,
@@ -42,7 +42,7 @@ public class TodoResource {
     }
 
     @PutMapping(value = "/{id}",consumes = "application/json",produces = "application/json")
-    public ResponseEntity<?> updateTodo(@RequestBody TodoUpdateForm userUpdateData,
+    public ResponseEntity<?> updateTodo(@RequestBody UpdateTodoForm userUpdateData,
                                         @PathVariable(name = "id") long id ){
         Todo updatedTodo = todoService.updateTodo(id,userUpdateData);
         return ResponseEntity.status(HttpStatus.OK).body(updatedTodo);
@@ -53,4 +53,6 @@ public class TodoResource {
         todoService.deleteTodo(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+
 }

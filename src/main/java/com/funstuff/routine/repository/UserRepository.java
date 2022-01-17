@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findUserById(Long id);
+    
+    User findByUsername(String username);
 
     @Override
     List<User> findAll();

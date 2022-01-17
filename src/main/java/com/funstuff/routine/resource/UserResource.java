@@ -1,8 +1,10 @@
 package com.funstuff.routine.resource;
 
+import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.request.SignupForm;
 import com.funstuff.routine.request.UserUpdateForm;
+import com.funstuff.routine.service.TodoService;
 import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
 
-    private final UserService userService;
+    @Autowired
+    private  UserService userService;
 
     @Autowired
-    public UserResource(UserService userService) {
-        this.userService = userService;
-    }
+    private  TodoService todoService;
 
     @GetMapping(value = "/",produces = {"application/json"})
     public ResponseEntity<?> getUsers(){
@@ -56,4 +58,20 @@ public class UserResource {
     }
 
 
+    @GetMapping("/{id}/todos")
+    public ResponseEntity<?> getUserTodosFilter(@PathVariable(name = "id") long id,
+                                                @RequestParam(name = "dailyTodos",required = false) boolean findDailyTodo,
+                                                @RequestParam(name="currentDailyTodos",required = false) boolean currentDailyTodos,
+                                                @RequestParam(name="previousTodos",required = false) boolean previousTodos,
+                                                @RequestParam(name="upcomingTodos",required = false) boolean upcomingTodos
+    ){
+        List<Todo> todoList;
+        System.out.println( previousTodos );
+        if(findDailyTodo)  todoList = todoService.getUserDailyTodos(id);
+       else  if (currentDailyTodos)  todoList = todoService.getUserDailyTodos(id);
+       else  if (previousTodos)  todoList = todoService.getUserPreviousTodos(id);
+        else  if (upcomingTodos)  todoList = todoService.getUserUpcomingTodos(id);
+        else return ResponseEntity.ok().body(todoService.getUserTodos(id));
+        return  ResponseEntity.ok().body(todoList);
+    }
 }

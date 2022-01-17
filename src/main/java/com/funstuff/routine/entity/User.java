@@ -1,12 +1,17 @@
 package com.funstuff.routine.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "user")
 @Table(name = "users")
@@ -19,6 +24,9 @@ public class User {
 
    @Column(name = "username",nullable = false,unique = true,length = 100)
    private String username;
+
+   @ManyToMany(fetch = FetchType.EAGER)
+   private Collection<Role> roles =new ArrayList<>() ;
 
    @Column(name = "display_name",length = 255)
    private String displayName;
@@ -43,4 +51,10 @@ public class User {
 
     @Column(name = "updatedAt")
     private Date updatedAt;
+
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Todo> todos;
 }
