@@ -7,12 +7,12 @@ import com.funstuff.routine.repository.UserRepository;
 import com.funstuff.routine.request.SignupForm;
 import com.funstuff.routine.request.UserUpdateForm;
 import com.funstuff.routine.service.UserService;
-import com.funstuff.routine.utility.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -30,10 +30,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setDisplayName(userForm.getDisplayName());
         user.setUsername(userForm.getUsername());
         user.setEmail(userForm.getEmail());
-        user.setPassword(Utils.generateHashedPassword(userForm.getPassword()));
+        user.setPassword(passwordEncoder.encode(userForm.getPassword()));
         user.setGithub(userForm.getGithub());
         user.setCompany(userForm.getCompany());
         user.setAddress(userForm.getAddress());
@@ -89,6 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getUser(long id) {
         User user = userRepository.findUserById (id);
+        if(user!=null)
         user.setPassword(null);
         return user;
     }
