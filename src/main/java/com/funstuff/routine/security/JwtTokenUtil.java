@@ -1,14 +1,10 @@
 package com.funstuff.routine.security;
 
 
-import com.funstuff.routine.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,17 +12,17 @@ import java.util.Date;
 @Component
 public class JwtTokenUtil {
 
-    private  String secret = "routine" ;
-    private  String issuer = "shifat";
-    private  int jwtExpirationMs = 24*60*60*1000;
+    private final String secret = "routine" ;
 
     public String generateAccessToken(Authentication authentication){
         UserDetailsImpl userPrinciple = (UserDetailsImpl) authentication.getPrincipal();
+        String issuer = "shifat";
+        int jwtExpirationMs = 24 * 60 * 60 * 1000;
         return Jwts.builder()
-                .setSubject(String.valueOf(userPrinciple.getId()))
+                .setSubject(userPrinciple.getId()  + "," +  userPrinciple.getEmail())
                 .setIssuer(issuer)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs ))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -40,12 +36,12 @@ public class JwtTokenUtil {
         return Long.parseLong(claims.getSubject().split(",")[0]);
     }
 
-    public String getUsername(String token){
+    public String getEmail(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-
+        System.out.println(claims.getSubject());
         return  claims.getSubject().split(",")[1];
     }
 

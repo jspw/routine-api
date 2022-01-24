@@ -2,8 +2,8 @@ package com.funstuff.routine.resource;
 
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
-import com.funstuff.routine.request.SignupForm;
-import com.funstuff.routine.request.UserUpdateForm;
+import com.funstuff.routine.payload.request.SignupForm;
+import com.funstuff.routine.payload.request.UserUpdateForm;
 import com.funstuff.routine.service.TodoService;
 import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

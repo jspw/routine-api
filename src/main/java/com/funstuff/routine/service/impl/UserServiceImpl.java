@@ -4,21 +4,13 @@ import com.funstuff.routine.entity.Role;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.repository.RoleRepository;
 import com.funstuff.routine.repository.UserRepository;
-import com.funstuff.routine.request.SignupForm;
-import com.funstuff.routine.request.UserUpdateForm;
+import com.funstuff.routine.payload.request.SignupForm;
+import com.funstuff.routine.payload.request.UserUpdateForm;
 import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(SignupForm userForm) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public User createUser(SignupForm userForm)  {
         User user = new User();
         user.setDisplayName(userForm.getDisplayName());
         user.setUsername(userForm.getUsername());

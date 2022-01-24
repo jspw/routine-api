@@ -2,12 +2,12 @@ package com.funstuff.routine.service.impl;
 
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
+import com.funstuff.routine.payload.request.UpdateTodoStatusForm;
 import com.funstuff.routine.repository.TodoRepository;
 import com.funstuff.routine.repository.UserRepository;
-import com.funstuff.routine.request.AddTodoForm;
-import com.funstuff.routine.request.UpdateTodoForm;
+import com.funstuff.routine.payload.request.AddTodoForm;
+import com.funstuff.routine.payload.request.UpdateTodoForm;
 import com.funstuff.routine.service.TodoService;
-import com.funstuff.routine.service.UserService;
 import com.funstuff.routine.utility.TodoStatus;
 import com.funstuff.routine.utility.TodoType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TodoServiceImpl implements TodoService {
     private UserRepository userRepository;
 
     @Override
-    public Todo addTodo(AddTodoForm addTodoForm) {
+    public Todo addTodo(AddTodoForm addTodoForm,long userId) {
         Todo todo = new Todo();
         todo.setTitle(addTodoForm.getTitle());
         todo.setDetail(addTodoForm.getDetail());
@@ -35,7 +35,7 @@ public class TodoServiceImpl implements TodoService {
         todo.setCreatedAt(Date.valueOf(LocalDate.now()));
         todo.setType(addTodoForm.getType());
         todo.setStatus(TodoStatus.PENDING);
-        User user = userRepository.findUserById(addTodoForm.getUserId());
+        User user = userRepository.findUserById(userId);
         todo.setUser(user);
         return todoRepository.save(todo);
     }
@@ -54,9 +54,17 @@ public class TodoServiceImpl implements TodoService {
         todo.setEndAt(updateTodoForm.getEndAt());
         todo.setUpdatedAt(Date.valueOf(LocalDate.now()));
         todo.setType(updateTodoForm.getType());
-        todo.setStatus(updateTodoForm.getStatus());
         return todoRepository.save(todo);
     }
+
+    @Override
+    public Todo updateTodoStatus(long id, UpdateTodoStatusForm statusForm) {
+        Todo todo = todoRepository.findTodoById(id);
+        todo.setStatus(statusForm.getStatus());
+        todo.setUpdatedAt(Date.valueOf(LocalDate.now()));
+        return todoRepository.save(todo);
+    }
+
 
     @Override
     public Todo getTodo(long id) {

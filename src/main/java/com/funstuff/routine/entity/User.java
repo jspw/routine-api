@@ -25,7 +25,7 @@ public class User {
    @ManyToMany(fetch = FetchType.EAGER)
    private Collection<Role> roles =new ArrayList<>() ;
 
-   @Column(name = "display_name",length = 255)
+   @Column(name = "display_name")
    private String displayName;
 
    @Column(name = "address")
@@ -46,7 +46,7 @@ public class User {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updated_At")
     private Date updatedAt;
 
     @JsonIdentityInfo(

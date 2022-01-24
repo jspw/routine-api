@@ -1,4 +1,4 @@
-package com.funstuff.routine.request;
+package com.funstuff.routine.payload.request;
 
 import lombok.*;
 

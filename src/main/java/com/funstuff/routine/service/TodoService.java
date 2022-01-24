@@ -1,18 +1,21 @@
 package com.funstuff.routine.service;
 
 import com.funstuff.routine.entity.Todo;
-import com.funstuff.routine.request.AddTodoForm;
-import com.funstuff.routine.request.UpdateTodoForm;
+import com.funstuff.routine.payload.request.AddTodoForm;
+import com.funstuff.routine.payload.request.UpdateTodoForm;
+import com.funstuff.routine.payload.request.UpdateTodoStatusForm;
 
 import java.util.List;
 
 public interface TodoService {
 
-    Todo addTodo(AddTodoForm addTodoForm);
+    Todo addTodo(AddTodoForm addTodoForm,long userId);
 
     List<Todo> getTodos();
 
     Todo updateTodo(long id, UpdateTodoForm updateTodoForm);
+
+    Todo updateTodoStatus (long id, UpdateTodoStatusForm statusForm);
 
     Todo getTodo(long id);
 

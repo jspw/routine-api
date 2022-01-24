@@ -1,6 +1,5 @@
-package com.funstuff.routine.request;
+package com.funstuff.routine.payload.request;
 
-import com.funstuff.routine.utility.TodoStatus;
 import com.funstuff.routine.utility.TodoType;
 import lombok.*;
 
@@ -11,11 +10,10 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-public class UpdateTodoForm {
+public class AddTodoForm {
     private String title;
     private String detail;
     private TodoType type;
     private Date startAt;
     private Date endAt;
-    private TodoStatus status;
 }

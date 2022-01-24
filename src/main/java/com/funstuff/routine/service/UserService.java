@@ -1,11 +1,9 @@
 package com.funstuff.routine.service;
 
-
-
 import com.funstuff.routine.entity.Role;
 import com.funstuff.routine.entity.User;
-import com.funstuff.routine.request.SignupForm;
-import com.funstuff.routine.request.UserUpdateForm;
+import com.funstuff.routine.payload.request.SignupForm;
+import com.funstuff.routine.payload.request.UserUpdateForm;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

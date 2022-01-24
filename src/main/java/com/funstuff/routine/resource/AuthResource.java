@@ -1,8 +1,7 @@
 package com.funstuff.routine.resource;
 
 
-import com.funstuff.routine.entity.User;
-import com.funstuff.routine.request.LoginFrom;
+import com.funstuff.routine.payload.request.LoginFrom;
 import com.funstuff.routine.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-//import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
