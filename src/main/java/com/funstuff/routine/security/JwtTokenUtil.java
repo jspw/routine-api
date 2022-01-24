@@ -7,6 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,20 +16,18 @@ import java.util.Date;
 @Component
 public class JwtTokenUtil {
 
-    @Value("${routine.app.jwtSecret}")
-    private  String secret ;
-    @Value("${routine.app.jwtIssuer}")
-    private  String issuer;
-    @Value("${routine.app.jwtExpirationMs}")
-    private  int jwtExpirationMs;
+    private  String secret = "routine" ;
+    private  String issuer = "shifat";
+    private  int jwtExpirationMs = 24*60*60*1000;
 
-    public String generateAccessToken(User user){
+    public String generateAccessToken(Authentication authentication){
+        UserDetailsImpl userPrinciple = (UserDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject(String.valueOf(user.getId()))
+                .setSubject(String.valueOf(userPrinciple.getId()))
                 .setIssuer(issuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs ))
-                .signWith(SignatureAlgorithm.ES256, secret)
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 

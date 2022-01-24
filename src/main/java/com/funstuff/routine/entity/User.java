@@ -2,10 +2,7 @@ package com.funstuff.routine.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ import java.util.List;
 
 @Entity(name = "user")
 @Table(name = "users")
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
 public class User {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
