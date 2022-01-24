@@ -6,22 +6,27 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenUtil {
-    private final String secret ="sdadasdasdasdasdas";
-    private final String issuer = "mh shifat";
+
+    @Value("${routine.app.jwtSecret}")
+    private  String secret ;
+    @Value("${routine.app.jwtIssuer}")
+    private  String issuer;
+    @Value("${routine.app.jwtExpirationMs}")
+    private  int jwtExpirationMs;
 
     public String generateAccessToken(User user){
         return Jwts.builder()
                 .setSubject(String.valueOf(user.getId()))
                 .setIssuer(issuer)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 24*60*60*1000 ))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs ))
                 .signWith(SignatureAlgorithm.ES256, secret)
                 .compact();
     }

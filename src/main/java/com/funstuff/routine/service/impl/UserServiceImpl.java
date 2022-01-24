@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
@@ -37,21 +37,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if(user == null){
-            throw  new UsernameNotFoundException("Username not found");
-        }
-
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {authorities.add(new SimpleGrantedAuthority(role.getName()));} );
-
-        return new  org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),
-                authorities);
     }
 
     @Override

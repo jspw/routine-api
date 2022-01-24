@@ -13,9 +13,4 @@ public class RoutineApplication {
         SpringApplication.run(RoutineApplication.class, args);
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }
