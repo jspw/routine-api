@@ -1,5 +1,6 @@
 package com.funstuff.routine.service.impl;
 
+import com.funstuff.routine.Exception.CustomException;
 import com.funstuff.routine.entity.Role;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.repository.RoleRepository;
@@ -8,6 +9,7 @@ import com.funstuff.routine.payload.request.SignupForm;
 import com.funstuff.routine.payload.request.UserUpdateForm;
 import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(long id, UserUpdateForm userUpdateForm) {
         User user = userRepository.getById(id);
+        if(user==null) throw new CustomException("UserId:" +id +" not found",HttpStatus.NOT_FOUND);
         user.setAddress(userUpdateForm.getAddress());
         user.setCompany(userUpdateForm.getCompany());
         user.setDisplayName(userUpdateForm.getDisplayName());
@@ -69,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(long id) {
         User user = userRepository.findUserById (id);
-        if(user!=null)
+        if(user==null) throw new CustomException("UserId:" +id +" not found",HttpStatus.NOT_FOUND);
         user.setPassword(null);
         return user;
     }

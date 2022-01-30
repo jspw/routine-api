@@ -1,5 +1,6 @@
 package com.funstuff.routine.service.impl;
 
+import com.funstuff.routine.Exception.CustomException;
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.payload.request.UpdateTodoStatusForm;
@@ -11,6 +12,7 @@ import com.funstuff.routine.service.TodoService;
 import com.funstuff.routine.utility.TodoStatus;
 import com.funstuff.routine.utility.TodoType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -48,6 +50,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Todo updateTodo(long id, UpdateTodoForm updateTodoForm) {
         Todo todo = todoRepository.findTodoById(id);
+        if(todo==null) throw new CustomException("TodoId: " +id +" not found", HttpStatus.NOT_FOUND);
         todo.setTitle(updateTodoForm.getTitle());
         todo.setDetail(updateTodoForm.getDetail());
         todo.setStartAt(updateTodoForm.getStartAt());
@@ -60,6 +63,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Todo updateTodoStatus(long id, UpdateTodoStatusForm statusForm) {
         Todo todo = todoRepository.findTodoById(id);
+        if(todo==null) throw new CustomException("TodoId: " +id +" not found",HttpStatus.NOT_FOUND);
         todo.setStatus(statusForm.getStatus());
         todo.setUpdatedAt(Date.valueOf(LocalDate.now()));
         return todoRepository.save(todo);
@@ -68,7 +72,9 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo getTodo(long id) {
-        return todoRepository.findTodoById(id);
+        Todo todo =todoRepository.findTodoById(id);
+        if(todo==null) throw new CustomException("TodoId: " +id +" not found",HttpStatus.NOT_FOUND);
+        return todo ;
     }
 
     @Override

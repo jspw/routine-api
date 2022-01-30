@@ -2,6 +2,7 @@ package com.funstuff.routine.resource;
 
 
 import com.funstuff.routine.payload.request.LoginFrom;
+import com.funstuff.routine.payload.response.Jwt;
 import com.funstuff.routine.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,7 @@ public class AuthResource {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token =  jwtTokenUtil.generateAccessToken(authentication);
 
-        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION,token).body(token);
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION,token).body(new Jwt(token));
 
     }
 }
