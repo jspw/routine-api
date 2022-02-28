@@ -23,6 +23,11 @@ public class CustomExceptionHandler {
         return buildResponseEntity(new ApiException(HttpStatus.NOT_FOUND,ex.getMessage()));
     }
 
+    @ExceptionHandler(ResourceAlreadyExistException.class)
+    public ResponseEntity<?> handleResourceAlreadyExists(Exception ex){
+        return buildResponseEntity(new ApiException(HttpStatus.BAD_REQUEST,ex.getMessage()));
+    }
+
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomExceptions(CustomException ex){
         return buildResponseEntity(new ApiException(ex.getHttpStatus(),ex.getErrorMessage()));

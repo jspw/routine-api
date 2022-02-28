@@ -21,6 +21,14 @@ public class UserDetailsImpl implements UserDetails {
     private String email;
     private String username;
 
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     @JsonIgnore
     private String password;
 

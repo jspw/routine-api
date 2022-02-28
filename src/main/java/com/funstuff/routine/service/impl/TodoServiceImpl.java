@@ -1,6 +1,7 @@
 package com.funstuff.routine.service.impl;
 
 import com.funstuff.routine.Exception.CustomException;
+import com.funstuff.routine.Exception.ResourceAlreadyExistException;
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.payload.request.UpdateTodoStatusForm;
@@ -29,6 +30,10 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo addTodo(AddTodoForm addTodoForm,long userId) {
+
+       if( todoRepository.findTodoByTitle(addTodoForm.getTitle())!= null) throw new ResourceAlreadyExistException(
+               "New todo title '"+ addTodoForm.getTitle()+ "' already exists");
+
         Todo todo = new Todo();
         todo.setTitle(addTodoForm.getTitle());
         todo.setDetail(addTodoForm.getDetail());

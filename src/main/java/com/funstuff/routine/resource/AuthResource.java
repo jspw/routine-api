@@ -33,6 +33,7 @@ public class AuthResource {
         System.out.println(loginFrom.getEmail() + " , " + loginFrom.getPassword());
 
         Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginFrom.getEmail(),loginFrom.getPassword()));
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token =  jwtTokenUtil.generateAccessToken(authentication);
 

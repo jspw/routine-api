@@ -14,6 +14,8 @@ public interface TodoRepository extends JpaRepository<Todo,Long> {
 
     Todo findTodoById(Long id);
 
+    Todo findTodoByTitle(String title);
+
     @Override
     List<Todo> findAll();
 

@@ -4,14 +4,19 @@ import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.payload.request.SignupForm;
 import com.funstuff.routine.payload.request.UserUpdateForm;
+import com.funstuff.routine.security.UserDetailsImpl;
 import com.funstuff.routine.service.TodoService;
 import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
@@ -72,5 +77,11 @@ public class UserResource {
         else  if (upcomingTodos)  todoList = todoService.getUserUpcomingTodos(id);
         else return ResponseEntity.ok().body(todoService.getUserTodos(id));
         return  ResponseEntity.ok().body(todoList);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(){
+        UserDetailsImpl user = (UserDetailsImpl)  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok().body(userService.getUser(user.getId()));
     }
 }
