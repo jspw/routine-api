@@ -25,7 +25,7 @@ public class Todo {
     @Column(name ="title",nullable=false,unique=true)
     private String title;
 
-    @Column(name= "detail")
+    @Column(name= "detail",columnDefinition = "TEXT",length = 1000)
     private String detail;
 
     @Enumerated(EnumType.ORDINAL)
@@ -36,7 +36,7 @@ public class Todo {
     @Column(name="type",nullable=false)
     private TodoType type;
 
-    @Column(name = "start_at")
+    @Column(name = "start_at",nullable = false)
     private Date startAt;
 
     @Column(name = "end_at")
