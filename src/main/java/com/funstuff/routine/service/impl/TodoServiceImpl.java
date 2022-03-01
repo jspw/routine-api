@@ -103,12 +103,12 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> getUserDailyTodos(long userId) {
-        return  todoRepository.findUserTodoByType(userId,TodoType.DAILY);
+    public List<Todo> getUserCurrentDailyTodos(long userId) {
+        return  todoRepository.findUserTodoByDateAndType(userId,Date.valueOf(LocalDate.now()),TodoType.DAILY);
     }
 
     @Override
-    public List<Todo> getUserCurrentDailyTodos(long userId) {
+    public List<Todo> getUserCurrentTodos(long userId) {
         return todoRepository.findUserTodoByDate(userId,Date.valueOf(LocalDate.now()));
     }
 }

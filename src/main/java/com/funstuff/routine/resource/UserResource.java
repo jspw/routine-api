@@ -62,23 +62,6 @@ public class UserResource {
     }
 
 
-    @GetMapping("/{id}/todos")
-    public ResponseEntity<?> getUserTodosFilter(@PathVariable(name = "id") long id,
-                                                @RequestParam(name = "dailyTodos",required = false) boolean findDailyTodo,
-                                                @RequestParam(name="currentDailyTodos",required = false) boolean currentDailyTodos,
-                                                @RequestParam(name="previousTodos",required = false) boolean previousTodos,
-                                                @RequestParam(name="upcomingTodos",required = false) boolean upcomingTodos
-    ){
-        List<Todo> todoList;
-        System.out.println( previousTodos );
-        if(findDailyTodo)  todoList = todoService.getUserDailyTodos(id);
-       else  if (currentDailyTodos)  todoList = todoService.getUserDailyTodos(id);
-       else  if (previousTodos)  todoList = todoService.getUserPreviousTodos(id);
-        else  if (upcomingTodos)  todoList = todoService.getUserUpcomingTodos(id);
-        else return ResponseEntity.ok().body(todoService.getUserTodos(id));
-        return  ResponseEntity.ok().body(todoList);
-    }
-
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(){
         UserDetailsImpl user = (UserDetailsImpl)  SecurityContextHolder.getContext().getAuthentication().getPrincipal();

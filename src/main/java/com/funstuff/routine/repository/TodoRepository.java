@@ -28,6 +28,9 @@ public interface TodoRepository extends JpaRepository<Todo,Long> {
     @Query(value = "select * from todos td where td.user_id=?1 and td.start_at=?2" ,nativeQuery = true)
     List<Todo> findUserTodoByDate( long id ,Date date);
 
+    @Query(value = "select * from todos td where td.user_id=?1 and td.start_at=?2 and td.type=?3" ,nativeQuery = true)
+    List<Todo> findUserTodoByDateAndType(long userId,Date date,TodoType todoType);
+
     @Query(value = "select * from todos td where td.user_id=?1 and td.end_at<?2" ,nativeQuery = true)
     List<Todo> findUserTodoByPreviousDate( long id ,Date date);
 

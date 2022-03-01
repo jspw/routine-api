@@ -27,8 +27,8 @@ public interface TodoService {
 
     List<Todo> getUserUpcomingTodos(long userId);
 
-    List<Todo> getUserDailyTodos(long userId);
-
     List<Todo> getUserCurrentDailyTodos(long userId);
+
+    List<Todo> getUserCurrentTodos(long userId);
 
 }

@@ -1,5 +1,6 @@
 package com.funstuff.routine.resource;
 
+import com.funstuff.routine.Exception.AuthenticationException;
 import com.funstuff.routine.entity.Todo;
 import com.funstuff.routine.payload.request.AddTodoForm;
 import com.funstuff.routine.payload.request.UpdateTodoForm;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/todos")
 public class TodoResource {
@@ -23,8 +26,22 @@ public class TodoResource {
     }
 
     @GetMapping
-    public ResponseEntity<?> getTodos(){
-        return  ResponseEntity.ok().body(todoService.getTodos());
+    public ResponseEntity<?> getTodos( @RequestParam(name = "dailyTodos",required = false) boolean findDailyTodo,
+                                       @RequestParam(name="currentTodos",required = false) boolean currentTodos,
+                                       @RequestParam(name="previousTodos",required = false) boolean previousTodos,
+                                       @RequestParam(name="upcomingTodos",required = false) boolean upcomingTodos){
+        UserDetailsImpl user = (UserDetailsImpl)  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(user == null) throw new AuthenticationException("Please login");
+        List<Todo> todoList;
+        System.out.println( previousTodos );
+        if(findDailyTodo)  todoList = todoService.getUserCurrentDailyTodos(user.getId());
+        else  if (currentTodos)  todoList = todoService.getUserCurrentTodos(user.getId());
+        else  if (previousTodos)  todoList = todoService.getUserPreviousTodos(user.getId());
+        else  if (upcomingTodos)  todoList = todoService.getUserUpcomingTodos(user.getId());
+        else return ResponseEntity.ok().body(todoService.getUserTodos(user.getId()));
+        System.out.println(todoList.size());
+        return  ResponseEntity.ok().body(todoList);
+
     }
 
     @PostMapping(value = "/",consumes = "application/json", produces = {"application/json"})
