@@ -37,7 +37,7 @@ public class Todo {
     @Column(name = "start_at",nullable = false)
     private Date startAt;
 
-    @Column(name = "end_at")
+    @Column(name = "end_at",nullable = false)
     private Date endAt;
 
     @Column(name = "created_at")
