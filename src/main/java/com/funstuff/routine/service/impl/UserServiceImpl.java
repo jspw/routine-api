@@ -1,6 +1,7 @@
 package com.funstuff.routine.service.impl;
 
 import com.funstuff.routine.Exception.CustomException;
+import com.funstuff.routine.Exception.ResourceAlreadyExistException;
 import com.funstuff.routine.entity.Role;
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.repository.RoleRepository;
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(SignupForm userForm)  {
+
+        if(userRepository.findByEmail(userForm.getEmail()) != null) throw new ResourceAlreadyExistException("Email address already exists.");
+
         User user = new User();
         user.setDisplayName(userForm.getDisplayName());
         user.setUsername(userForm.getUsername());
