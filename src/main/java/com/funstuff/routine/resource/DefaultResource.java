@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultResource {
     @GetMapping
     ResponseEntity<?> getHome(){
-        return ResponseEntity.status(HttpStatus.OK).body("Vai ami bachi asi....!");
+        return ResponseEntity.status(HttpStatus.OK).body("Vai ami baiccha asi....!");
     }
 }
