@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/routine-0.0.1-SNAPSHOT.jar
+web: java -jar target/routine-0.0.1-SNAPSHOT.jar
