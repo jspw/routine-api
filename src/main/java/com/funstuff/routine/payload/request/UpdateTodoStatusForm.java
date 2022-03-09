@@ -1,6 +1,6 @@
 package com.funstuff.routine.payload.request;
 
-import com.funstuff.routine.utility.TodoStatus;
+import com.funstuff.routine.utility.enums.TodoStatus;
 import lombok.*;
 
 @AllArgsConstructor

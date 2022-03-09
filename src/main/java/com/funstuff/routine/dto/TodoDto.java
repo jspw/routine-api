@@ -1,7 +1,7 @@
 package com.funstuff.routine.dto;
 
-import com.funstuff.routine.utility.TodoStatus;
-import com.funstuff.routine.utility.TodoType;
+import com.funstuff.routine.utility.enums.TodoStatus;
+import com.funstuff.routine.utility.enums.TodoType;
 import lombok.*;
 
 import java.sql.Date;

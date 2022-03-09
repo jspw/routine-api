@@ -1,10 +1,8 @@
 package com.funstuff.routine.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.funstuff.routine.utility.TodoStatus;
-import com.funstuff.routine.utility.TodoType;
+import com.funstuff.routine.utility.enums.TodoStatus;
+import com.funstuff.routine.utility.enums.TodoType;
 import lombok.*;
 
 import javax.persistence.*;

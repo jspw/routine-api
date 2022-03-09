@@ -1,7 +1,7 @@
 package com.funstuff.routine.repository;
 
 import com.funstuff.routine.entity.Todo;
-import com.funstuff.routine.utility.TodoType;
+import com.funstuff.routine.utility.enums.TodoType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

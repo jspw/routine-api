@@ -1,10 +1,8 @@
 package com.funstuff.routine.filter;
 
-import com.funstuff.routine.Exception.CustomException;
 import com.funstuff.routine.security.JwtTokenUtil;
 import com.funstuff.routine.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,9 +38,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-//            else {
-//                throw new CustomException("Invalid token, Please login.",HttpStatus.BAD_REQUEST);
-//            }
         }catch  (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -57,7 +52,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")){
             return headerAuth.substring(7,headerAuth.length());
         }
-//        else throw new CustomException("No bearer token found.", HttpStatus.BAD_REQUEST);
         return null;
     }
 }

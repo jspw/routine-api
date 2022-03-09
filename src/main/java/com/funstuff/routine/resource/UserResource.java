@@ -1,6 +1,6 @@
 package com.funstuff.routine.resource;
 
-import com.funstuff.routine.entity.Todo;
+
 import com.funstuff.routine.entity.User;
 import com.funstuff.routine.payload.request.SignupForm;
 import com.funstuff.routine.payload.request.UserUpdateForm;
@@ -10,13 +10,10 @@ import com.funstuff.routine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
